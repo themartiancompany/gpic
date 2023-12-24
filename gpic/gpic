@@ -27,7 +27,7 @@ _gpic() {
 _email="${1}"
 _out="${2}"
 
-[[ $# < 1 ]] && \
+(( $# < 1 )) && \
   echo \
     "Downloads the Google account's profile picture" && \
   echo \
