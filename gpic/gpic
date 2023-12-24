@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# SPDX-License-Identifier: AGPL-3.0
+
+_gpic() {
+  local \
+    _email="${1}" \
+    _out="${2}" \
+    _filename \
+    _url 
+  _url="http://picasaweb.google.com/data/entry/api/user"
+  _filename="$( \
+    echo "${_email}" | \
+      sed \
+        "s/@/-/g")"
+  [[ "${_out}" == "" ]] && \
+    _out="$( \
+      pwd)/${_filename}"
+  [[ -d "${_out}" ]] && \
+    _out="${_out}/${_filename}"
+  echo "${_out}"
+  curl \
+    -o "${_out}" \
+    "${_url}/${_email}?alt=json"
+}
+
+_email="${1}"
+_out="${2}"
+
+[[ $# < 1 ]] && \
+  echo \
+    "Downloads the Google account's profile picture" && \
+  echo \
+    "Usage: gpic <email> <output file>"
+
+_gpic \
+  "${_email}"
